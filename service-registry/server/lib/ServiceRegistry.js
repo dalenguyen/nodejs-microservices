@@ -1,4 +1,5 @@
-const semver = require('semver'); // searching version of services for load balancer
+/* eslint-disable array-callback-return */
+const semver = require('semver');
 
 class ServiceRegistry {
   constructor(log) {
@@ -7,13 +8,16 @@ class ServiceRegistry {
     this.timeout = 30;
   }
 
+  // searching version of services for load balancer
   get(name, version) {
+    this.cleanup();
     const candidates = Object.values(this.services)
       .filter(candidate => candidate.name === name && semver.satisfies(candidate.version, version));
     return candidates[Math.floor(Math.random() * candidates.length)];
   }
 
   register(name, version, ip, port) {
+    this.cleanup();
     const key = name + version + ip + port;
     if (!this.services[key]) {
       this.services[key] = {
@@ -36,6 +40,16 @@ class ServiceRegistry {
     const key = name + version + ip + port;
     delete this.services[key];
     return key;
+  }
+
+  cleanup() {
+    const now = Math.floor(new Date() / 1000);
+    Object.keys(this.services).map((key) => {
+      if (this.services[key].timestamp + this.timeout < now) {
+        delete this.services[key];
+        this.log.debug(`Removed service ${key}`);
+      }
+    });
   }
 }
 
