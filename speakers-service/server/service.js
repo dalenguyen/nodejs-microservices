@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 const express = require('express');
 
 const service = express();
