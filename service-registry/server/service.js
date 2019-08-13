@@ -12,6 +12,19 @@ module.exports = (config) => {
     });
   }
 
+  // Add microservices endpoints
+  service.put('register/:serviceName/:serviceVersion/:servicePort', (req, res, next) => {
+    return next('Not implemented');
+  });
+
+  service.delete('register/:serviceName/:serviceVersion/:servicePort', (req, res, next) => {
+    return next('Not implemented');
+  });
+
+  service.get('find/:serviceName/:serviceVersion', (req, res, next) => {
+    return next('Not implemented');
+  });
+
   // eslint-disable-next-line no-unused-vars
   service.use((error, req, res, next) => {
     res.status(error.status || 500);
