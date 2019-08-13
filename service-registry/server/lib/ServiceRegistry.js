@@ -1,8 +1,16 @@
+const semver = require('semver'); // searching version of services for load balancer
+
 class ServiceRegistry {
   constructor(log) {
     this.log = log;
     this.services = {};
     this.timeout = 30;
+  }
+
+  get(name, version) {
+    const candidates = Object.values(this.services)
+      .filter(candidate => candidate.name === name && semver.satisfies(candidate.version, version));
+    return candidates[Math.floor(Math.random() * candidates.length)];
   }
 
   register(name, version, ip, port) {

@@ -34,9 +34,11 @@ module.exports = (config) => {
     return res.json({ result: serviceKey });
   });
 
-  // eslint-disable-next-line arrow-body-style
-  service.get('/find/:serviceName/:serviceVersion', (req, res, next) => {
-    return next('Not implemented');
+  service.get('/find/:serviceName/:serviceVersion', (req, res) => {
+    const { serviceName, serviceVersion } = req.params;
+    const svc = serviceRegistry.get(serviceName, serviceVersion);
+    if (!svc) return res.status(404).json({ result: 'Service not found!' });
+    return res.json({ result: svc });
   });
 
   // eslint-disable-next-line no-unused-vars
