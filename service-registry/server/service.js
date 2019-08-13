@@ -25,13 +25,17 @@ module.exports = (config) => {
     return res.json({ result: serviceKey });
   });
 
-  // eslint-disable-next-line arrow-body-style
-  service.delete('register/:serviceName/:serviceVersion/:servicePort', (req, res, next) => {
-    return next('Not implemented');
+  service.delete('/register/:serviceName/:serviceVersion/:servicePort', (req, res) => {
+    const { serviceName, serviceVersion, servicePort } = req.params;
+    const serviceIp = req.connection.remoteAddress.includes('::') ? `[${req.connection.remoteAddress}]` : req.connection.remoteAddress;
+
+    const serviceKey = serviceRegistry
+      .unregister(serviceName, serviceVersion, serviceIp, servicePort);
+    return res.json({ result: serviceKey });
   });
 
   // eslint-disable-next-line arrow-body-style
-  service.get('find/:serviceName/:serviceVersion', (req, res, next) => {
+  service.get('/find/:serviceName/:serviceVersion', (req, res, next) => {
     return next('Not implemented');
   });
 
