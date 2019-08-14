@@ -62,7 +62,7 @@ class SpeakersService {
 
   async getService(servicename) {
     const response = await axios.get(`${this.serviceRegistryUrl}/find/${servicename}/${this.serviceVersionIdentifier}`);
-    return response.data.result;
+    return response.data;
   }
 }
 

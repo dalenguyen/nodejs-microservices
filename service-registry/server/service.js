@@ -38,7 +38,7 @@ module.exports = (config) => {
     const { serviceName, serviceVersion } = req.params;
     const svc = serviceRegistry.get(serviceName, serviceVersion);
     if (!svc) return res.status(404).json({ result: 'Service not found!' });
-    return res.json({ result: svc });
+    return res.json(svc);
   });
 
   // eslint-disable-next-line no-unused-vars
