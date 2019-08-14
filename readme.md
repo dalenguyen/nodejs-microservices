@@ -29,7 +29,7 @@ brew install rabbitmq
 Start RabbitMQ server. Check for the path after you install rabbitmq.
 
 ```sh
- /usr/local/Cellar/rabbitmq/3.7.16/sbin/rabbitmq-server 
+/usr/local/sbin/rabbitmq-server
 ```
 
 Test Message Queue at: http://localhost:3080/feedback
